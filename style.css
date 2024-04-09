@@ -1,0 +1,373 @@
+@font-face {
+    font-family: 'Boogaloo';
+    src: url('img/7_statusbars/3_icons/Boogaloo font/Boogaloo-Regular.ttf') format('truetype');
+}
+
+* {
+    margin: 0px;
+    user-select: none;
+}
+
+body {
+    font-family: 'Boogaloo';
+    background-image: url('./img/el-pollo-loco-background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100vh;
+}
+
+.content p {
+    font-size: 29px;
+}
+
+.contentScreen {
+    position: relative;
+    width: 79vw;
+}
+
+canvas {
+    position: relative;
+    display: block;
+    background-color: black;
+    width: 100%;
+}
+
+.startScreen {
+    width: 100%;
+    height: 100%;
+}
+
+.startScreen img {
+    display: flex;
+    width: 100%;
+    height: auto;
+}
+
+.defaultBoxShadowBlack {
+    box-shadow: 0px 0px 24px -6px black;
+}
+
+.playSVG {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    height: 17%;
+    width: 10%;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 24px -2px whitesmoke;
+    border-radius: 50%;
+    transition: transform 0.30s ease;
+    cursor: pointer;
+}
+
+.playSVG:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.keyList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255, 153, 0, 0.1);
+    backdrop-filter: blur(4px);
+    border-radius: 4px;
+    padding: 1.3vw 0.5vw;
+    width: 12vw;
+    box-shadow: 0px 0px 13px 4px #8C3916;
+}
+
+.keyList img {
+    width: 2vw;
+    height: auto;
+    margin-bottom: -0.6vh;
+}
+
+.keySection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.keySection span {
+    font-size: 1.5vw;
+    margin-top: 4px;
+}
+
+.keys {
+    display: flex;
+    justify-content: space-evenly;
+    width: 8vw;
+}
+
+.keys span {
+    font-size: 2vw;
+}
+
+.seperator {
+    width: 90%;
+    border-top: 1px rgba(0, 0, 0, 0.2) solid;
+    margin-bottom: 0.8vw;
+    margin-top: 0.8vw;
+}
+
+.volume {
+    position: absolute;
+    z-index: 999;
+    top: 0.8vw;
+    right: 0.8vw;
+    width: 4.5vw;
+    height: auto;
+
+}
+
+.volume:hover {
+    cursor: pointer;
+}
+
+.fullscreen {
+    position: absolute;
+    z-index: 999;
+    bottom: 0.8vw;
+    right: 0.8vw;
+    width: 4.5vw;
+    height: auto;
+}
+
+.fullscreen:hover {
+    cursor: pointer;
+}
+
+.turn-phone-note {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.88);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 6vw;
+    text-align: center;
+    z-index: 9999;
+}
+
+#arrow_left_touch_element,
+#arrow_right_touch_element,
+#jump_touch_element,
+#throw_touch_element,
+#stay_touch_element {
+    position: absolute;
+    width: 3.5vw;
+    height: auto;
+    bottom: 1vw;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 0.7vw solid rgba(0, 0, 0, 0.01);
+}
+
+#arrow_left_touch_element {
+    left: 2vw;
+}
+
+#arrow_right_touch_element {
+    left: 14vw;
+}
+
+#jump_touch_element {
+    right: 20vw;
+}
+
+#throw_touch_element {
+    right: 11vw;
+}
+
+#stay_touch_element {
+    left: 33vw;
+}
+
+@keyframes bounceEffect {
+    0% {
+        width: 0.1vw;
+    }
+
+    25% {
+        width: 120vw;
+    }
+
+    50% {
+        width: 100vw;
+    }
+
+    75% {
+        width: 120vw;
+    }
+
+    100% {
+        width: 100vw;
+    }
+}
+
+@keyframes moveUp {
+    from {
+        top: 50%;
+    }
+
+    to {
+        top: 40%;
+    }
+}
+
+.gameOverMessage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: auto;
+    animation: bounceEffect 3s ease-in-out forwards,
+        moveUp 1s ease-in-out forwards 4s;
+}
+
+@keyframes buttonFadeIn {
+    from {
+        transform: translate(-50%, -50%) scale(0.1);
+        opacity: 0;
+    }
+
+    to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+.tryAgainBtn {
+    position: absolute;
+    top: 86%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: linear-gradient(to bottom, #FFCB1A, #FFDD00, #FFA500);
+    border: none;
+    border-bottom: 0.6vw solid #A43D18;
+    border-radius: 1.2vw;
+    color: black;
+    padding: 1vw 2vw;
+    font-size: 2.2vw;
+    font-family: 'Boogaloo';
+    letter-spacing: 0.2vw;
+    text-wrap: nowrap;
+    animation: buttonFadeIn 1s ease-out forwards;
+}
+
+.tryAgainBtn:hover {
+    cursor: pointer;
+    border-bottom: 0;
+}
+
+.nextLevelBtn {
+    position: absolute;
+    top: 80%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+    background-image: linear-gradient(to bottom, #FFCB1A, #FFDD00, #FFA500);
+    border: none;
+    border-bottom: 0.6vw solid #A43D18;
+    border-radius: 1.2vw;
+    color: black;
+    padding: 1vw 2vw;
+    font-size: 2.2vw;
+    font-family: 'Boogaloo';
+    letter-spacing: 0.2vw;
+    text-wrap: nowrap;
+    animation: buttonFadeIn 1s ease-out forwards;
+}
+
+.nextLevelBtn:hover {
+    cursor: pointer;
+    border-bottom: 0;
+}
+
+@keyframes bgrDarkenFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.darkenBackground {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(1.5px);
+    width: 100%;
+    height: 100%;
+    animation: bgrDarkenFadeIn 2s ease-out forwards;
+}
+
+.buttonDisabled {
+    position: absolute;
+    top: 80%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+    background-image: linear-gradient(to bottom, #8a6d10, #917d00, #976200);
+    border: none;
+    border-bottom: 0.6vw solid #662710;
+    border-radius: 1.2vw;
+    color: black;
+    padding: 1vw 2vw;
+    font-size: 2.2vw;
+    font-family: 'Boogaloo';
+    letter-spacing: 0.2vw;
+    text-wrap: nowrap;
+    animation: buttonFadeIn 1s ease-out forwards;
+}
+
+@media (max-width:600px) {
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4vw;
+    }
+
+    .keyList {
+        display: flex;
+        flex-direction: row;
+        padding: 1.3vw 0.5vw;
+        width: auto;
+        padding: 1.3vw 2vw;
+    }
+
+    .seperator {
+        width: 0;
+        height: 6vw;
+        border: none;
+        border-right: 1px rgba(0, 0, 0, 0.2) solid;
+        margin-bottom: 0;
+        margin-top: 0;
+        margin-left: 2vw;
+        margin-right: 2vw;
+    }
+}
+
+.d-none {
+    display: none;
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Pollo Loco</title>
+    <link rel="icon" type="image/x-icon" href="img/6_salsa_bottle/1_salsa_bottle_on_ground.png">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="./models/drawable-object.class.js" defer></script>
+    <script src="./models/world.class.js" defer></script>
+    <script src="./models/collisionBehavior.class.js" defer></script>
+    <script src="./models/status-bar.class.js" defer></script>
+    <script src="./models/status-bar-endboss.class.js" defer></script>
+    <script src="./models/coin-object.class.js" defer></script>
+    <script src="./models/bottle-object.class.js" defer></script>
+    <script src="./models/keyboard.class.js" defer></script>
+    <script src="./models/movable-object.class.js" defer></script>
+    <script src="./models/background-object.class.js" defer></script>
+    <script src="./models/cloud.class.js" defer></script>
+    <script src="./models/character.class.js" defer></script>
+    <script src="./models/chicken.class.js" defer></script>
+    <script src="./models/chick.class.js" defer></script>
+    <script src="./models/level.class.js" defer></script>
+    <script src="./models/endboss.class.js" defer></script>
+    <script src="./models/throwable-object.class.js" defer></script>
+    <script src="./models/coin.class.js" defer></script>
+    <script src="./models/bottle.class.js" defer></script>
+    <script src="./js/level.config.js" defer></script>
+    <script src="./levels/level1.js" defer></script>
+    <script src="./levels/level2.js" defer></script>
+    <script src="./levels/level3.js" defer></script>
+    <script src="./levels/level4.js" defer></script>
+    <script src="./levels/level5.js" defer></script>
+    <script src="./js/game.js" defer></script>
+    <script src="script.js" defer></script>
+</head>
+
+<body onload="init()">
+    <div class="content" id="content">
+        <div id="key_list" class="keyList">
+            <div class="keySection">
+                <div class="keys">
+                    <img src="./img/arrow-left-r.svg" alt="A_key_image">
+                    <span>/</span>
+                    <span>A</span>
+                </div>
+                <span>Move Left</span>
+            </div>
+            <div class="seperator"></div>
+            <div class="keySection">
+                <div class="keys">
+                    <img src="./img/arrow-right-r.svg" alt="ARROW_RIGHT_key_image">
+                    <span>/</span>
+                    <span>D</span>
+                </div>
+                <span>Move Right</span>
+            </div>
+            <div class="seperator"></div>
+            <div class="keySection">
+                <div class="keys">
+                    <img src="./img/arrow-up-r.svg" alt="ARROW_UP_key_image">
+                    <span>/</span>
+                    <span>SPACE</span>
+                </div>
+                <span>Jump Up</span>
+            </div>
+            <div class="seperator"></div>
+            <div class="keySection">
+                <div class="keys">
+                    <span>F</span>
+                </div>
+                <span>Throw</span>
+            </div>
+        </div>
+        <div id="content_screen" class="contentScreen defaultBoxShadowBlack">
+            <div id="start_screen" class="startScreen">
+                <svg onclick="startGame()" class="playSVG" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 5.5V18.5L17 12L9 5.5Z" fill="#FFAE00" stroke="#8C3916" stroke-width="1"
+                        stroke-linejoin="round" />
+                </svg>
+                <img id="start_image" src="./img/9_intro_outro_screens/start/startscreen_1.png"
+                    alt="start_screen_image">
+            </div>
+            <canvas id="canvas" class="d-none" width="1920" height="1080"></canvas>
+            <img id="loud_icon" onclick="toggleVolume()" class="volume d-none" src="./img/volume_on.svg"
+                alt="volume_on_image"></img>
+            <img id="mute_icon" onclick="toggleVolume()" class="volume d-none" src="./img/volume_off.svg"
+                alt="volume_off_image"></img>
+            <img id="fullscreen" onclick="openFullscreen()" class="fullscreen d-none" src="./img/fullscreen.svg"
+                alt="fullscreen_image">
+            <img id="fullscreen_exit" onclick="closeFullscreen()" class="fullscreen d-none"
+                src="./img/fullscreen_exit.svg" alt="fullscreen_exit_image">
+            <div id="darken_bgr" class="darkenBackground d-none"></div>
+            <img id="lost_image" class="gameOverMessage d-none" src="./img/9_intro_outro_screens/game_over/you lost.png"
+                alt="you_lost_image">
+            <img id="win_image" class="gameOverMessage d-none" src="./img/9_intro_outro_screens/game_over/game over.png"
+                alt="you_win_image">
+            <button id="try_again_btn" class="tryAgainBtn d-none">Try again</button>
+            <button id="next_level_btn" class="d-none">Next level</button>
+            <svg id="arrow_left_touch_element" class="d-none" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M20.3284 11.0001V13.0001L7.50011 13.0001L10.7426 16.2426L9.32842 17.6568L3.67157 12L9.32842 6.34314L10.7426 7.75735L7.49988 11.0001L20.3284 11.0001Z"
+                    fill="#000000" />
+            </svg>
+            <svg id="arrow_right_touch_element" class="d-none" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M15.0378 6.34317L13.6269 7.76069L16.8972 11.0157L3.29211 11.0293L3.29413 13.0293L16.8619 13.0157L13.6467 16.2459L15.0643 17.6568L20.7079 11.9868L15.0378 6.34317Z"
+                    fill="#000000" />
+            </svg>
+            <svg id="jump_touch_element" class="d-none" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M17.6568 8.96219L16.2393 10.3731L12.9843 7.10285L12.9706 20.7079L10.9706 20.7059L10.9843 7.13806L7.75404 10.3532L6.34314 8.93572L12.0132 3.29211L17.6568 8.96219Z"
+                    fill="#000000" />
+            </svg>
+            <svg id="throw_touch_element" class="d-none" width="24" height="24" viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="black" stroke-width="5" />
+                <circle cx="50" cy="50" r="30" fill="none" stroke="black" stroke-width="3" />
+                <circle cx="50" cy="50" r="15" fill="none" stroke="black" stroke-width="2" />
+                <circle cx="50" cy="50" r="2" fill="black" />
+                <line x1="50" y1="0" x2="50" y2="100" stroke="black" stroke-width="2" />
+                <line x1="0" y1="50" x2="100" y2="50" stroke="black" stroke-width="2" />
+            </svg>
+            <svg id="stay_touch_element" class="d-none" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M16.3394 9.32245C16.7434 8.94589 16.7657 8.31312 16.3891 7.90911C16.0126 7.50509 15.3798 7.48283 14.9758 7.85938L12.0497 10.5866L9.32245 7.66048C8.94589 7.25647 8.31312 7.23421 7.90911 7.61076C7.50509 7.98731 7.48283 8.62008 7.85938 9.0241L10.5866 11.9502L7.66048 14.6775C7.25647 15.054 7.23421 15.6868 7.61076 16.0908C7.98731 16.4948 8.62008 16.5171 9.0241 16.1405L11.9502 13.4133L14.6775 16.3394C15.054 16.7434 15.6868 16.7657 16.0908 16.3891C16.4948 16.0126 16.5171 15.3798 16.1405 14.9758L13.4133 12.0497L16.3394 9.32245Z"
+                    fill="#000000" />
+            </svg>
+        </div>
+    </div>
+    <div id="turnYourPhoneNote" class="turn-phone-note d-none">
+        Please turn your device to landscape mode to continue.
+    </div>
+</body>
+
+</html>
+<!--
+     (\(\ 
+    (=':')  (MEOW)
+    ( (")(")
+-->
